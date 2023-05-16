@@ -28,6 +28,7 @@ int Ds3502u::begin() {
     }
     return 0; // no errors
 }
+
 /* @param outputVoltage the voltage the potentiometer should output
  * @return 1 if error (outputVoltage isn't within limits, i2c write failed)
  * @return 0 if no error
