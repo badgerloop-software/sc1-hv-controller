@@ -4,6 +4,9 @@
 #include "mbed.h"
 #include "telemetry.h"
 
+// variable for the digital data struct
+extern volatile struct Digital_Data digital_data;
+
 // read all the digital inputs
 void readDigital();
 
