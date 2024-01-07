@@ -1,6 +1,7 @@
 #ifndef __ANALOG_H__
 #define __ANALOG_H__
 
+#include "mbed.h"
 #include "telemetry.h"
 #include "mutexless_analog.h"
 

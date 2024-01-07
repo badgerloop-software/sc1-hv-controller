@@ -6,6 +6,7 @@
 #include "telemetry.h"
 #include "digital.h"
 
+
 /*
     Class that extends the CANManager class for high voltage
 */

@@ -64,17 +64,40 @@ void read_Inertia_Fdbck() {
 }
 
 void readDigital() {
+    // Startup/Shutdown
+    // Read signals in same order as present on relay
+    // Turn firmware controlled signals on one by one if all previous steps are nominal (high)
     read_Driver_Estop_Fdbck();
     read_Ext_Estop_Fdbck();
-    read_MCU_Stat_Fdbck();
-    read_Isolation_Fdbck();
+    read_Inertia_Fdbck();
+    if (digital_data.driver_EStop && digital_data.external_EStop && digital_data.crash_sensor) {
+        set_BMS_DSCHRG_EN(1);
+    } else {
+        set_BMS_DSCHRG_EN(0);
+    }
+
     read_DSCHRG_EN_Fdbck();
+    if (digital_data.battery_discharge_enabled) {
+        set_BMS_CHRG_EN(1);
+    } else {
+        set_BMS_CHRG_EN(0);
+    }
+
     read_CHRG_EN_Fdbck();
+    read_Isolation_Fdbck();
+    if (digital_data.battery_charge_enabled && digital_data.isolation_status && startup_signal) {
+        set_MCU_HV_EN(1);
+    } else {
+        set_MCU_HV_EN(0);
+    }
+
+    // Remaining signals
+    read_MCU_Stat_Fdbck();
     read_BMS_MPO1();
     read_LO_CONT_TELEM();
     read_MC_CONT_TELEM();
     read_MPPT_CONT_TELEM();
-    read_Inertia_Fdbck();
+    
 }
 
 // Set up polling of digital IO at specified rate
