@@ -4,8 +4,9 @@
 #include "hv_can.h"
 
 // Analog/digital IO polling rates
-#define DIGITAL_POLLING_RATE 5ms
-#define ANALOG_POLLING_RATE 5ms
+#define DIGITAL_POLLING_RATE 25ms
+#define ANALOG_POLLING_RATE 25ms
+#define TELEMETRY_SEND_RATE 25ms
 
 // CAN Pins
 #define rdPin D15
@@ -14,6 +15,14 @@
 
 int main()
 {
+    // Turn off unused switch outputs
+    set_USE_SUPP(0);
+    set_USE_DCDC(0);
+
+    // Enable current sensing
+    set_SUPP_DEG(1);
+    set_DCDC_DEG(1);
+
     // Initialize IO updating
     initDigital(DIGITAL_POLLING_RATE);
     initAnalog(ANALOG_POLLING_RATE);
@@ -24,6 +33,6 @@ int main()
     while (1) {
         // Periodically send all telemetry over CAN
         hvCANManager.sendTelemetry();
-        wait_us(1000000);
+        hvCANManager.runQueue(TELEMETRY_SEND_RATE);
     }
 }

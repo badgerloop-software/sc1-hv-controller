@@ -21,10 +21,15 @@ struct Digital_Data {
     bool crash_sensor : 1;
 };
 
+// variable for the digital data struct
+extern volatile struct Digital_Data digital_data;
+
 // AnalogIn values
 extern volatile float DCDC_current_value;
 extern volatile float supplemental_current_value;
 extern volatile float supplemental_voltage_value;
 
+// Restart Enable signal from Driver Dashboard to turn on car
+extern volatile bool startup_signal;
 
 #endif

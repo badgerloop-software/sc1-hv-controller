@@ -1,5 +1,8 @@
 #include "hv_can.h"
 
+// Restart Enable signal from Driver Dashboard to turn on car
+volatile bool startup_signal= false;
+
 /*
     Initialize HVCANManager with super call to CANManager
 */
@@ -9,7 +12,13 @@ HVCANManager::HVCANManager(PinName rd, PinName td, int frequency) : CANManager(r
     Handle reading of input message from CAN
 */
 void HVCANManager::readHandler(int messageID, SharedPtr<unsigned char> data, int length) {
-    
+    switch (messageID) {
+        case 0x100:
+            startup_signal = *data;
+            break;
+        default:
+            break;
+    }
 }
 
 /*
