@@ -12,6 +12,8 @@
 #define rdPin D15
 #define tdPin D14
 
+// Display Counter
+int counter = 0;
 
 int main()
 {
@@ -34,5 +36,15 @@ int main()
         // Periodically send all telemetry over CAN
         hvCANManager.sendTelemetry();
         hvCANManager.runQueue(TELEMETRY_SEND_RATE);
+
+        // Periodically display digital and analog values (for testing) and reset counter
+        if (counter >= 50) {
+            displayDigital();
+            displayAnalog();
+            counter = 0;
+        }
+
+        // Increment the display counter
+        counter ++;
     }
 }

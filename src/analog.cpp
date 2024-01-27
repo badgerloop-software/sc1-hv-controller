@@ -32,3 +32,12 @@ void readAnalog(){
 void initAnalog(std::chrono::microseconds readSignalPeriod) {
     readAnalogDelay.attach(readAnalog, readSignalPeriod);
 }
+
+// Display analog data for testing
+void displayAnalog() {
+    printf("Analog Input Signals:\n");
+    printf("DCDC_IS: %f\n", DCDC_current_value);
+    printf("SUPP_IS: %f\n", supplemental_current_value);
+    printf("SENSE_VSUPP: %f\n", supplemental_voltage_value);
+    printf("\n");
+}

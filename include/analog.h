@@ -11,4 +11,7 @@ void readAnalog();
 // repeatedly call readAnalog() with the input time interval
 void initAnalog(std::chrono::microseconds readSignalPeriod);
 
+// display analog data for testing
+void displayAnalog();
+
 #endif
