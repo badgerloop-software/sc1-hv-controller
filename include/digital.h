@@ -19,4 +19,7 @@ void set_DCDC_DEG(int value);
 void set_USE_SUPP(int value);
 void set_USE_DCDC(int value);
 
+// display digital data for testing
+void displayDigital();
+
 #endif

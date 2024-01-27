@@ -126,3 +126,30 @@ void set_USE_SUPP(int value) {
 void set_USE_DCDC(int value) {
     USE_DCDC.write(value);
 }
+
+// Display digial data for testing
+void displayDigital() {
+    printf("Digital Input Signals:\n");
+    printf("CHRG_EN_Fdbck: %d\n", digital_data.battery_charge_enabled);
+    printf("DSCHRG_EN_Fdbck: %d\n", digital_data.battery_discharge_enabled);
+    printf("BMS_MPO1: %d\n", digital_data.BMS_MPO1);
+    printf("Inertia_Fdbck: %d\n", digital_data.crash_sensor);
+    printf("Driver_Estop_Fdbck: %d\n", digital_data.driver_EStop);
+    printf("Ext_Estop_Fdbck: %d\n", digital_data.external_EStop);
+    printf("Isolation_Fdbck: %d\n", digital_data.isolation_status);
+    printf("LO_CONT_TELEM: %d\n", digital_data.lv_contactor);
+    printf("MC_CONT_TELEM: %d\n", digital_data.mc_contactor);
+    printf("MPPT_CONT_TELEM: %d\n", digital_data.mppt_contactor);
+    printf("MCU_Stat_Fdbck: %d\n", digital_data.start_shutdown_status);
+    printf("\n");
+
+    printf("Digital Output Signals:\n");
+    printf("BMS_CHRG_EN: %d\n", BMS_CHRG_EN.read());
+    printf("BMS_DSCHRG_EN: %d\n", BMS_DSRCHG_EN.read());
+    printf("DCDC_DEG: %d\n", DCDC_DEG.read());
+    printf("SUPP_DEG: %d\n", SUPP_DEG.read());
+    printf("MCU_HV_EN: %d\n", MCU_HV_EN.read());
+    printf("USE_SUPP: %d\n", USE_SUPP.read());
+    printf("USE_DCDC: %d\n", USE_DCDC.read());
+    printf("\n");
+}
