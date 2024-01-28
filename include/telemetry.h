@@ -13,7 +13,9 @@ struct Digital_Data {
     bool start_shutdown_status : 1;
     bool isolation_status : 1;
     bool battery_discharge_enabled : 1;
+    bool battery_discharge_enable : 1;
     bool battery_charge_enabled : 1;
+    bool battery_charge_enable : 1;
     bool BMS_MPO1 : 1;
     bool lv_contactor : 1;
     bool mc_contactor : 1;
