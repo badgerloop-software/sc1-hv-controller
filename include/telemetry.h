@@ -21,6 +21,8 @@ struct Digital_Data {
     bool mc_contactor : 1;
     bool mppt_contactor : 1;
     bool crash_sensor : 1;
+    bool use_supp : 1;
+    bool use_dcdc : 1;
 };
 
 // variable for the digital data struct
