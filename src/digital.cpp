@@ -18,13 +18,13 @@ DigitalIn MPPT_CONT_TELEM(PC_8);
 DigitalIn Inertia_Fdbck(PB_2);
 DigitalIn BMS_DSRCHG_EN(PB_1);
 DigitalIn BMS_CHRG_EN(PB_15);
+DigitalIn USE_SUPP(PB_3);
+DigitalIn USE_DCDC(PB_4);
 
 // Outputs
 DigitalOut MCU_HV_EN(PB_7);
 DigitalOut SUPP_DEG(PC_2);
 DigitalOut DCDC_DEG(PC_3);
-DigitalOut USE_SUPP(PB_3);
-DigitalOut USE_DCDC(PB_4);
 
 // store input digital data inside a struct to reduce the memory
 volatile struct Digital_Data digital_data = {};
@@ -56,6 +56,8 @@ void readDigital() {
     digital_data.battery_charge_enabled = CHRG_EN_Fdbck.read();
     digital_data.BMS_MPO1 = BMS_MPO1.read();
     digital_data.isolation_status = Isolation_Fdbck.read();
+    digital_data.use_supp = USE_SUPP.read();
+    digital_data.use_dcdc = USE_DCDC.read();
 
     if (digital_data.driver_EStop && 
         digital_data.external_EStop && 
@@ -90,19 +92,13 @@ void set_SUPP_DEG(int value) {
 void set_DCDC_DEG(int value) {
     DCDC_DEG.write(value);
 }
-void set_USE_SUPP(int value) {
-    USE_SUPP.write(value);
-}
-void set_USE_DCDC(int value) {
-    USE_DCDC.write(value);
-}
 
 // Display digial data for testing
 void displayDigital() {
     printf("Digital Input Signals:\n");
-    printf("BMS_CHRG_EN: %d\n", BMS_CHRG_EN.read());
+    printf("BMS_CHRG_EN: %d\n", digital_data.battery_charge_enable);
     printf("CHRG_EN_Fdbck: %d\n", digital_data.battery_charge_enabled);
-    printf("BMS_DSCHRG_EN: %d\n", BMS_DSRCHG_EN.read());
+    printf("BMS_DSCHRG_EN: %d\n", digital_data.battery_discharge_enable);
     printf("DSCHRG_EN_Fdbck: %d\n", digital_data.battery_discharge_enabled);
     printf("BMS_MPO1: %d\n", digital_data.BMS_MPO1);
     printf("Inertia_Fdbck: %d\n", digital_data.crash_sensor);
@@ -113,13 +109,13 @@ void displayDigital() {
     printf("MC_CONT_TELEM: %d\n", digital_data.mc_contactor);
     printf("MPPT_CONT_TELEM: %d\n", digital_data.mppt_contactor);
     printf("MCU_Stat_Fdbck: %d\n", digital_data.start_shutdown_status);
+    printf("USE_SUPP: %d\n", digital_data.use_supp);
+    printf("USE_DCDC: %d\n", digital_data.use_dcdc);
     printf("\n");
 
     printf("Digital Output Signals:\n");
     printf("DCDC_DEG: %d\n", DCDC_DEG.read());
     printf("SUPP_DEG: %d\n", SUPP_DEG.read());
     printf("MCU_HV_EN: %d\n", MCU_HV_EN.read());
-    printf("USE_SUPP: %d\n", USE_SUPP.read());
-    printf("USE_DCDC: %d\n", USE_DCDC.read());
     printf("\n");
 }
