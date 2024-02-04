@@ -30,6 +30,9 @@ void readAnalog(){
 
 // Set up polling of analog IO at specified rate
 void initAnalog(std::chrono::microseconds readSignalPeriod) {
+    DCDC_IS.set_reference_voltage(3.3);
+    SUPP_IS.set_reference_voltage(3.3);
+    SENSE_VSUPP.set_reference_voltage(3.3);
     readAnalogDelay.attach(readAnalog, readSignalPeriod);
 }
 

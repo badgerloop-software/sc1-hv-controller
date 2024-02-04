@@ -17,10 +17,6 @@ int counter = 0;
 
 int main()
 {
-    // Turn off unused switch outputs
-    set_USE_SUPP(0);
-    set_USE_DCDC(0);
-
     // Enable current sensing
     set_SUPP_DEG(1);
     set_DCDC_DEG(1);
