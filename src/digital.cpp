@@ -64,8 +64,7 @@ void readDigital() {
         digital_data.crash_sensor && 
         digital_data.battery_discharge_enabled && 
         digital_data.battery_charge_enabled && 
-        digital_data.isolation_status && 
-        startup_signal) {
+        digital_data.isolation_status) { // && startup_signal
         set_MCU_HV_EN(1);
     } else {
         set_MCU_HV_EN(0);
