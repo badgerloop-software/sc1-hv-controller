@@ -23,6 +23,7 @@ struct Digital_Data {
     bool crash_sensor : 1;
     bool use_supp : 1;
     bool use_dcdc : 1;
+    bool mcu_hv_en : 1;
 };
 
 // variable for the digital data struct
