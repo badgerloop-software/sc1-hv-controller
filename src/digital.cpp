@@ -46,7 +46,6 @@ void read_MPPT_CONT_TELEM() {
 void readDigital() {
     // Startup/Shutdown
     // Read signals in same order as present on relay
-    // Enable software HV EN if all signals nominal (high)
     digital_data.driver_EStop = Driver_Estop_Fdbck.read();
     digital_data.external_EStop = Ext_Estop_Fdbck.read();
     digital_data.crash_sensor = Inertia_Fdbck.read();
@@ -59,13 +58,15 @@ void readDigital() {
     digital_data.use_supp = USE_SUPP.read();
     digital_data.use_dcdc = USE_DCDC.read();
 
+    // If all startup/shutdown nominal (high), set HV enable based on Software startup_signal
+    // Do not allow on if fault 
     if (digital_data.driver_EStop && 
         digital_data.external_EStop && 
         digital_data.crash_sensor && 
         digital_data.battery_discharge_enabled && 
         digital_data.battery_charge_enabled && 
-        digital_data.isolation_status) { // && startup_signal
-        set_MCU_HV_EN(1);
+        digital_data.isolation_status) { 
+        set_MCU_HV_EN(startup_signal);
     } else {
         set_MCU_HV_EN(0);
     }
@@ -84,6 +85,7 @@ void initDigital(std::chrono::microseconds readSignalPeriod) {
 
 void set_MCU_HV_EN(int value) {
     MCU_HV_EN.write(value);
+    digital_data.mcu_hv_en = MCU_HV_EN.read();
 }
 void set_SUPP_DEG(int value) {
     SUPP_DEG.write(value);

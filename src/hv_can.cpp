@@ -13,7 +13,7 @@ HVCANManager::HVCANManager(PinName rd, PinName td, int frequency) : CANManager(r
 */
 void HVCANManager::readHandler(int messageID, SharedPtr<unsigned char> data, int length) {
     switch (messageID) {
-        case 0x100:
+        case 0x025:
             startup_signal = *data;
             break;
         default:
