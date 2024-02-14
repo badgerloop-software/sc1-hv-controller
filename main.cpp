@@ -9,8 +9,8 @@
 #define TELEMETRY_SEND_RATE 25ms
 
 // CAN Pins
-#define rdPin D15
-#define tdPin D14
+#define rdPin PA_11
+#define tdPin PA_12
 
 // Display Counter
 int counter = 0;
