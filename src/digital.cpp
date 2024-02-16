@@ -106,10 +106,12 @@ void displayDigital() {
     printf("Driver_Estop_Fdbck: %d\n", digital_data.driver_EStop);
     printf("Ext_Estop_Fdbck: %d\n", digital_data.external_EStop);
     printf("Isolation_Fdbck: %d\n", digital_data.isolation_status);
+    printf("MCU_HV_EN: %d\n", digital_data.mcu_hv_en);
     printf("LO_CONT_TELEM: %d\n", digital_data.lv_contactor);
     printf("MC_CONT_TELEM: %d\n", digital_data.mc_contactor);
     printf("MPPT_CONT_TELEM: %d\n", digital_data.mppt_contactor);
     printf("MCU_Stat_Fdbck: %d\n", digital_data.start_shutdown_status);
+    printf("Startup Signal: %d\n", startup_signal);
     printf("USE_SUPP: %d\n", digital_data.use_supp);
     printf("USE_DCDC: %d\n", digital_data.use_dcdc);
     printf("\n");

@@ -3,20 +3,25 @@
 #include "analog.h"
 #include "hv_can.h"
 
+#define DEBUG_PRINT 1
+
 // Analog/digital IO polling rates
-#define DIGITAL_POLLING_RATE 25ms
-#define ANALOG_POLLING_RATE 25ms
-#define TELEMETRY_SEND_RATE 25ms
+#define DIGITAL_POLLING_RATE 50ms
+#define ANALOG_POLLING_RATE 50ms
+#define TELEMETRY_SEND_RATE 100ms
 
 // CAN Pins
 #define rdPin PA_11
 #define tdPin PA_12
 
-// Display Counter
-int counter = 0;
 
 int main()
 {
+#if DEBUG_PRINT
+    BufferedSerial serial(USBTX, USBRX, 115200);
+    int counter = 0;
+#endif
+
     // Enable current sensing
     set_SUPP_DEG(1);
     set_DCDC_DEG(1);
@@ -33,8 +38,10 @@ int main()
         hvCANManager.sendTelemetry();
         hvCANManager.runQueue(TELEMETRY_SEND_RATE);
 
-        // Periodically display digital and analog values (for testing) and reset counter
-        if (counter >= 50) {
+#if DEBUG_PRINT
+        // Display digital and analog values every second (for testing) 
+        if (counter >= (1000 / TELEMETRY_SEND_RATE.count())) {
+            printf("\e[1;1H\e[2J");
             displayDigital();
             displayAnalog();
             counter = 0;
@@ -42,5 +49,6 @@ int main()
 
         // Increment the display counter
         counter ++;
+#endif
     }
 }
