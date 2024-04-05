@@ -12,10 +12,10 @@ volatile float supplemental_current_value;
 volatile float supplemental_voltage_value;
 
 void read_DCDC_IS() {
-    DCDC_current_value = DCDC_IS.read_voltage();
+    DCDC_current_value = DCDC_IS.read_voltage() * IS_CONST;
 }
 void read_SUPP_IS() {
-    supplemental_current_value = SUPP_IS.read_voltage();
+    supplemental_current_value = SUPP_IS.read_voltage() * IS_CONST;
 }
 void read_SENSE_VSUPP() {
     supplemental_voltage_value = SENSE_VSUPP.read_voltage();
@@ -39,8 +39,8 @@ void initAnalog(std::chrono::microseconds readSignalPeriod) {
 // Display analog data for testing
 void displayAnalog() {
     printf("Analog Input Signals:\n");
-    printf("DCDC_IS: %f\n", DCDC_current_value * 22700 / 1200);
-    printf("SUPP_IS: %f\n", supplemental_current_value * 22700 / 1200);
+    printf("DCDC_IS: %f\n", DCDC_current_value);
+    printf("SUPP_IS: %f\n", supplemental_current_value);
     printf("SENSE_VSUPP: %f\n", supplemental_voltage_value);
     printf("\n");
 }

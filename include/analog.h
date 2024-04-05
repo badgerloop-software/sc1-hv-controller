@@ -5,6 +5,8 @@
 #include "telemetry.h"
 #include "mutexless_analog.h"
 
+#define IS_CONST 18 // 22700 / 1200 multiplier from hardware 
+
 // read all the analog inputs
 void readAnalog();
 
