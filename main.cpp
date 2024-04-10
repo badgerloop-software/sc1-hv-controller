@@ -8,7 +8,7 @@
 // Analog/digital IO polling rates
 #define DIGITAL_POLLING_RATE 50ms
 #define ANALOG_POLLING_RATE 50ms
-#define TELEMETRY_SEND_RATE 100ms
+#define TELEMETRY_SEND_RATE 50ms
 
 // CAN Pins
 #define rdPin PA_11
