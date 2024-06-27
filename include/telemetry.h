@@ -37,4 +37,7 @@ extern volatile float supplemental_voltage_value;
 // Restart Enable signal from Driver Dashboard to turn on car
 extern volatile bool startup_signal;
 
+// Pack temp from BMS
+extern volatile float pack_temp;
+
 #endif

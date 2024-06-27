@@ -7,6 +7,9 @@ AnalogInMutexless DCDC_IS(PC_0);
 AnalogInMutexless SUPP_IS(PC_1);
 AnalogInMutexless SENSE_VSUPP(PC_5);
 
+PwmOut BATTERY_FAN(PA_4);
+PwmOut HV_FAN(PA_1);
+
 volatile float DCDC_current_value;
 volatile float supplemental_current_value;
 volatile float supplemental_voltage_value;
@@ -21,11 +24,26 @@ void read_SENSE_VSUPP() {
     supplemental_voltage_value = SENSE_VSUPP.read_voltage();
 }
 
+void set_fan_PWM() {
+    if (pack_temp <= MIN_PACK_TEMP) {
+        BATTERY_FAN.write(0.1);
+        HV_FAN.write(0.1);
+    } else if (pack_temp >= MAX_PACK_TEMP) {
+        BATTERY_FAN.write(1);
+        HV_FAN.write(1);
+    } else {
+        float pwm_signal = 0.1 + 0.9 * (pack_temp - MIN_PACK_TEMP) / (MAX_PACK_TEMP - MIN_PACK_TEMP);
+        BATTERY_FAN.write(pwm_signal);
+        HV_FAN.write(pwm_signal);
+    }
+}
+
 // read all analog input
 void readAnalog(){
     read_DCDC_IS();
     read_SUPP_IS();
     read_SENSE_VSUPP();
+    set_fan_PWM();
 }
 
 // Set up polling of analog IO at specified rate

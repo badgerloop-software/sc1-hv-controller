@@ -6,6 +6,8 @@
 #include "mutexless_analog.h"
 
 #define IS_CONST 18 // 22700 / 1200 multiplier from hardware 
+#define MIN_PACK_TEMP 36 // pack temp thresholds used for controlling fans
+#define MAX_PACK_TEMP 52.5
 
 // read all the analog inputs
 void readAnalog();
