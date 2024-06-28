@@ -10,6 +10,8 @@ AnalogInMutexless SENSE_VSUPP(PC_5);
 PwmOut BATTERY_FAN(PA_4);
 PwmOut HV_FAN(PA_1);
 
+volatile float fan_pwm;
+
 volatile float DCDC_current_value;
 volatile float supplemental_current_value;
 volatile float supplemental_voltage_value;
@@ -26,16 +28,15 @@ void read_SENSE_VSUPP() {
 
 void set_fan_PWM() {
     if (pack_temp <= MIN_PACK_TEMP) {
-        BATTERY_FAN.write(0.1);
-        HV_FAN.write(0.1);
+        fan_pwm = 0.1;
     } else if (pack_temp >= MAX_PACK_TEMP) {
-        BATTERY_FAN.write(1);
-        HV_FAN.write(1);
+        fan_pwm = 1;
     } else {
-        float pwm_signal = 0.1 + 0.9 * (pack_temp - MIN_PACK_TEMP) / (MAX_PACK_TEMP - MIN_PACK_TEMP);
-        BATTERY_FAN.write(pwm_signal);
-        HV_FAN.write(pwm_signal);
+        fan_pwm = 0.1 + 0.9 * (pack_temp - MIN_PACK_TEMP) / (MAX_PACK_TEMP - MIN_PACK_TEMP);
     }
+    fan_pwm = 0.96; // TODO: remove this debug line to manually set PWM
+    BATTERY_FAN.write(fan_pwm);
+    HV_FAN.write(fan_pwm);
 }
 
 // read all analog input
@@ -60,5 +61,7 @@ void displayAnalog() {
     printf("DCDC_IS: %f\n", DCDC_current_value);
     printf("SUPP_IS: %f\n", supplemental_current_value);
     printf("SENSE_VSUPP: %f\n", supplemental_voltage_value);
+    printf("Fan PWM: %f\n", fan_pwm);
+    printf("Pack Temp: %f\n", pack_temp);
     printf("\n");
 }
