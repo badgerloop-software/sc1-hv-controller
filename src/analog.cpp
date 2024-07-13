@@ -34,7 +34,6 @@ void set_fan_PWM() {
     } else {
         fan_pwm = 0.1 + 0.9 * (pack_temp - MIN_PACK_TEMP) / (MAX_PACK_TEMP - MIN_PACK_TEMP);
     }
-    fan_pwm = 0.96; // TODO: remove this debug line to manually set PWM
     BATTERY_FAN.write(fan_pwm);
     HV_FAN.write(fan_pwm);
 }
@@ -44,7 +43,9 @@ void readAnalog(){
     read_DCDC_IS();
     read_SUPP_IS();
     read_SENSE_VSUPP();
-    set_fan_PWM();
+
+    // Dynamic fan speed disabled for comp. Fans do not spin at lower PWMs
+    // set_fan_PWM();
 }
 
 // Set up polling of analog IO at specified rate
@@ -53,6 +54,10 @@ void initAnalog(std::chrono::microseconds readSignalPeriod) {
     SUPP_IS.set_reference_voltage(3.3);
     SENSE_VSUPP.set_reference_voltage(3.3);
     readAnalogDelay.attach(readAnalog, readSignalPeriod);
+
+    // Always run fans at full speed for comp
+    BATTERY_FAN.write(1);
+    HV_FAN.write(1);
 }
 
 // Display analog data for testing
