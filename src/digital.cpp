@@ -5,7 +5,7 @@
 Ticker readDigitalDelay;
 
 // Inputs
-DigitalIn Driver_Estop_Fdbck(PA_13);
+DigitalIn Driver_Estop_Fdbck(PB_2);
 DigitalIn Ext_Estop_Fdbck(PA_14);
 DigitalIn MCU_Stat_Fdbck(PA_15);
 DigitalIn Isolation_Fdbck(PC_12);
@@ -15,7 +15,7 @@ DigitalIn BMS_MPO1(PB_13);
 DigitalIn LO_CONT_TELEM(PC_10);
 DigitalIn MC_CONT_TELEM(PC_6);
 DigitalIn MPPT_CONT_TELEM(PC_8);
-DigitalIn Inertia_Fdbck(PB_2);
+DigitalIn Inertia_Fdbck(PA_13);
 DigitalIn BMS_DSRCHG_EN(PB_1);
 DigitalIn BMS_CHRG_EN(PB_15);
 DigitalIn USE_SUPP(PB_3);

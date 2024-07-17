@@ -27,15 +27,15 @@ void read_SENSE_VSUPP() {
 }
 
 void set_fan_PWM() {
-    if (pack_temp <= MIN_PACK_TEMP) {
-        fan_pwm = 0.1;
-    } else if (pack_temp >= MAX_PACK_TEMP) {
-        fan_pwm = 1;
+    // Fan on if battery in BPS fault or over termpature threshold
+    if (digital_data.BMS_MPO1 || digital_data.battery_charge_enable || digital_data.battery_discharge_enable ||
+        pack_temp >= PACK_TEMP_THRESHOLD) {
+        BATTERY_FAN.write(1);
+        HV_FAN.write(1);
     } else {
-        fan_pwm = 0.1 + 0.9 * (pack_temp - MIN_PACK_TEMP) / (MAX_PACK_TEMP - MIN_PACK_TEMP);
+        BATTERY_FAN.write(0);
+        HV_FAN.write(0);
     }
-    BATTERY_FAN.write(fan_pwm);
-    HV_FAN.write(fan_pwm);
 }
 
 // read all analog input
@@ -43,9 +43,7 @@ void readAnalog(){
     read_DCDC_IS();
     read_SUPP_IS();
     read_SENSE_VSUPP();
-
-    // Dynamic fan speed disabled for comp. Fans do not spin at lower PWMs
-    // set_fan_PWM();
+    //set_fan_PWM();
 }
 
 // Set up polling of analog IO at specified rate
